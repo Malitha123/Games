@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Local Texas Hold'em vs CPU</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div id="toast" class="toast hidden"></div>
+
+  <main class="shell">
+    <header class="topbar">
+      <div>
+        <div class="eyebrow">LOCAL POKER VS CPU</div>
+        <h1>Texas Hold'em</h1>
+      </div>
+      <button id="newGameTop" class="ghost hidden" type="button">New Game</button>
+    </header>
+
+    <section id="setupView" class="panel setup-panel">
+      <div class="setup-copy">
+        <span class="pill">1 human + 1–7 CPU players</span>
+        <h2>Set up your table</h2>
+        <p>You control one seat. Every other player is computer controlled and automatically folds, checks, calls, bets, raises, goes all-in, and deals through the hand.</p>
+        <p class="setup-note">CPU players do not see your hole cards. Their decisions use their own cards, the board, pot odds, stack sizes, and simulated hand equity.</p>
+      </div>
+
+      <form id="setupForm" class="setup-grid">
+        <label>
+          Total players
+          <select id="playerCount">
+            <option value="2">2</option><option value="3">3</option><option value="4" selected>4</option>
+            <option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option>
+          </select>
+        </label>
+
+        <label>
+          Your name
+          <input id="humanName" type="text" maxlength="24" value="You" required />
+        </label>
+
+        <label>
+          Starting chips ($)
+          <input id="startingStack" type="number" min="1" step="1" value="500" required />
+        </label>
+
+        <label>
+          Small blind ($)
+          <input id="smallBlind" type="number" min="1" step="1" value="5" required />
+        </label>
+
+        <label>
+          Big blind ($)
+          <input id="bigBlind" type="number" min="2" step="1" value="10" required />
+        </label>
+
+        <label class="toggle-label">
+          <span>Automatic hands</span>
+          <span class="toggle-row"><input id="autoNextSetup" type="checkbox" checked /> Deal the next hand automatically</span>
+        </label>
+
+        <fieldset class="dealer-box">
+          <legend>Dealer setting</legend>
+          <label class="radio-card">
+            <input type="radio" name="dealerMode" value="home" checked />
+            <span><strong>Home game</strong><small>The dealer role rotates with the dealer button.</small></span>
+          </label>
+          <label class="radio-card">
+            <input type="radio" name="dealerMode" value="casino" />
+            <span><strong>Casino setting</strong><small>A fixed house dealer deals. The button still rotates for blinds and action order.</small></span>
+          </label>
+        </fieldset>
+
+        <button class="primary start-button" type="submit">Start Game</button>
+      </form>
+    </section>
+
+    <section id="gameView" class="hidden">
+      <div class="status-strip">
+        <div><span>Hand</span><strong id="handNo">#0</strong></div>
+        <div><span>Street</span><strong id="street">Waiting</strong></div>
+        <div><span>Dealer</span><strong id="dealerDisplay">–</strong></div>
+        <div><span>Blinds</span><strong id="blinds">$5 / $10</strong></div>
+      </div>
+
+      <section class="table-wrap">
+        <div class="poker-table">
+          <div id="playersLayer" class="players-layer"></div>
+          <div class="table-center">
+            <div class="pot-label">POT</div>
+            <div id="pot" class="pot-value">$0</div>
+            <div id="community" class="community"></div>
+            <div id="resultBox" class="result-box hidden"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="control-grid">
+        <div class="panel action-panel">
+          <div class="panel-head">
+            <div>
+              <div class="eyebrow">ACTION</div>
+              <h3 id="turnTitle">Game starting…</h3>
+            </div>
+            <label class="auto-toggle"><input id="autoNext" type="checkbox" checked /> Auto deal</label>
+          </div>
+          <div id="actionSummary" class="action-summary"></div>
+          <div class="talk-wrap"><span class="talk-label">TABLE TALK</span><div id="tableTalk" class="table-talk quiet" aria-live="polite">Table is quiet…</div></div>
+          <div id="actionControls" class="actions"></div>
+          <button id="newHand" class="primary full hidden" type="button">Deal Next Hand</button>
+        </div>
+
+        <div class="panel log-panel">
+          <div class="panel-head">
+            <div>
+              <div class="eyebrow">HAND HISTORY</div>
+              <h3>Table log</h3>
+            </div>
+          </div>
+          <div id="handLog" class="hand-log"></div>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script src="/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Local Blackjack vs CPU</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div id="toast" class="toast hidden"></div>
+  <main class="shell">
+    <header class="topbar">
+      <div>
+        <div class="eyebrow">LOCAL BLACKJACK VS CPU</div>
+        <h1>Blackjack</h1>
+      </div>
+      <button id="newGameTop" class="ghost hidden" type="button">New Game</button>
+    </header>
+
+    <section id="setupView" class="panel setup-panel">
+      <div class="setup-copy">
+        <span class="pill">1 human + up to 6 CPU players</span>
+        <h2>Set up your blackjack table</h2>
+        <p>You play one seat. Every CPU player bets and plays automatically. The house dealer deals and completes its hand automatically.</p>
+        <div class="rules-card">
+          <strong>Rules</strong>
+          <span>6 decks · dealer stands soft 17 · blackjack pays 3:2 · double after split · up to 4 split hands · split aces get one card each</span>
+          <small>No insurance or surrender in this version.</small>
+        </div>
+      </div>
+
+      <form id="setupForm" class="setup-grid">
+        <label>
+          Total player seats
+          <select id="playerCount">
+            <option value="1">1, just me</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4" selected>4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+          </select>
+        </label>
+        <label>
+          Your name
+          <input id="humanName" type="text" maxlength="24" value="You" required />
+        </label>
+        <label>
+          Starting bankroll ($)
+          <input id="startingStack" type="number" min="1" step="1" value="500" required />
+        </label>
+        <label>
+          Table minimum ($)
+          <input id="minimumBet" type="number" min="1" step="1" value="10" required />
+        </label>
+        <label>
+          Your default bet ($)
+          <input id="defaultBet" type="number" min="1" step="1" value="10" required />
+        </label>
+        <label class="toggle-label">
+          <span>Automatic rounds</span>
+          <span class="toggle-row"><input id="autoNextSetup" type="checkbox" checked /> Deal next round automatically</span>
+        </label>
+        <button class="primary start-button" type="submit">Start Game</button>
+      </form>
+    </section>
+
+    <section id="gameView" class="hidden">
+      <div class="status-strip">
+        <div><span>Round</span><strong id="roundNo">#0</strong></div>
+        <div><span>Phase</span><strong id="phase">Waiting</strong></div>
+        <div><span>Table min</span><strong id="minBet">$10</strong></div>
+        <div><span>Shoe</span><strong id="shoe">312 cards</strong></div>
+      </div>
+
+      <section class="table-wrap">
+        <div class="blackjack-table">
+          <div class="dealer-zone">
+            <div class="dealer-title">HOUSE DEALER</div>
+            <div id="dealerCards" class="cards"></div>
+            <div id="dealerTotal" class="total-pill">Showing 0</div>
+          </div>
+          <div class="felt-copy">BLACKJACK PAYS 3 TO 2</div>
+          <div id="playersGrid" class="players-grid"></div>
+        </div>
+      </section>
+
+      <section class="control-grid">
+        <div class="panel action-panel">
+          <div class="panel-head">
+            <div>
+              <div class="eyebrow">ACTION</div>
+              <h3 id="turnTitle">Game starting…</h3>
+            </div>
+            <label class="auto-toggle"><input id="autoNext" type="checkbox" checked /> Auto deal</label>
+          </div>
+          <div id="actionSummary" class="action-summary"></div>
+          <div class="talk-wrap">
+            <span class="talk-label">TABLE TALK</span>
+            <div id="tableTalk" class="table-talk quiet" aria-live="polite">Table is quiet…</div>
+          </div>
+          <div id="actionControls" class="actions"></div>
+          <div id="nextRoundBox" class="next-round hidden">
+            <label>Next bet ($)<input id="nextBet" type="number" min="1" step="1" value="10" /></label>
+            <button id="newRound" class="primary" type="button">Deal Next Round</button>
+          </div>
+          <div id="resultBox" class="result-box hidden"></div>
+        </div>
+
+        <div class="panel log-panel">
+          <div class="panel-head">
+            <div>
+              <div class="eyebrow">ROUND HISTORY</div>
+              <h3>Table log</h3>
+            </div>
+          </div>
+          <div id="handLog" class="hand-log"></div>
+        </div>
+      </section>
+    </section>
+  </main>
+  <script src="/app.js"></script>
+</body>
+</html>
